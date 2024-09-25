@@ -2,14 +2,13 @@ import requests
 
 
 def is_request_valid(request, user) -> bool:
-    if request.status_code == 200:
+    if request == 200:
         return True
-    else:
-        if request.status_code == 404:
-            print("Invalid username")
-        elif request.status_code == 503:
-            print("Service unavailable, please try again later")
-        return False
+    elif request == 404:
+        print("Invalid username")
+    elif request == 503:
+        print("Service unavailable, please try again later")
+    return False
 
 
 def app_controller():
@@ -17,7 +16,7 @@ def app_controller():
     response = requests.get(
         "https://api.github.com/users/" + username_input + "/events"
     )
-    if is_request_valid(response, username_input):
+    if is_request_valid(response.status_code, username_input):
         pass
     else:
         app_controller()
